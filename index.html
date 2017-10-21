@@ -151,7 +151,15 @@
                 container.style.display = "block";
                 resize_canvas();
                 clearInterval(focus);
-                setInterval(drawrand, 10);
+                fs.readFile('../TagSplashServer/tweet.txt', function read(err, data) {
+                    if (err) {
+                        throw err;
+                    }
+
+                    var len = data.length;
+
+                    setInterval(drawrand, 10);
+                });
             }
         }
     });
