@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .input {
+            border-bottom-color: black;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            width: 40%;
+            height: 10%;
+            text-align: center;
+            outline: none;
+            font-size: 40px;
+            position: absolute;
+            right: 30%;
+            top: 45%;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .placeholder {
+            width: 40%;
+            height: 10%;
+            text-align: center;
+            outline: none;
+            font-size: 40px;
+            position: absolute;
+            right: 30%;
+            top: 45%;
+            color: grey;
+        }
+
+    </style>
+
+</head>
+<body>
+<div contenteditable="true" class="input" autofocus=true id="input"></div>
+<div class="placeholder" id="placeholder">#putyourhashtaghere</div>
+
+<script>
+    var input = document.getElementById("input");
+    var placeholder = document.getElementById("placeholder");
+    setInterval(function () {
+        input.focus();
+        if (input.innerHTML != "") {
+            placeholder.style.display = "none";
+        } else {
+            placeholder.style.display = "block";
+        }
+    }, 10);
+    input.addEventListener('keydown', function (event) {
+        if (event.key === "Enter") {
+            if (input.innerHTML != "") {
+                input.style.display = "none";
+                placeholder.style.display = "none";
+            }
+        }
+    });
+</script>
+</body>
+</html>
