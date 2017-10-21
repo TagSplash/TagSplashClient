@@ -5,7 +5,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>Tag Splash</title>
-    <link rel="icon" type="img/ico" href="assets/favicon.ico">
     <style>
         .input {
             border-bottom-color: black;
@@ -48,11 +47,12 @@
             right: 10px;
             bottom: 10px;
         }
-        #download{
+
+        #download {
             position: absolute;
             right: 10px;
             bottom: 50px;
-            cursor:pointer;
+            cursor: pointer;
         }
 
         .bar1, .bar2, .bar3 {
@@ -151,7 +151,7 @@
                 container.style.display = "block";
                 resize_canvas();
                 clearInterval(focus);
-                setInterval(drawrand, 1000);
+                setInterval(drawrand, 10);
             }
         }
     });
@@ -167,42 +167,38 @@
     }
 
     function rand(min, max) {
-        return Math.floor((Math.random() * max) + min);
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 
     function drawrand() {
-        draw(rand(1, window.innerWidth), rand(1, window.innerHeight), rand(10, 100))
+        draw(rand(1, window.innerWidth)-70, rand(1, window.innerHeight)-70, rand(10, 100))
     }
 
     function draw(x, y, s) {
         ctx = canvas.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(x, y, s, 0, 2 * Math.PI);
-        var type = rand(1, 6);
-        //if (type == 1) {
-            var image = new Image();
-            image.src = "https://tagsplash.github.io/TagSplashClient/assets/bluePurple/paint1.png";
-            image.width=s;
-            image.height=s;
-            ctx.drawImage(image, x, y);
-        /*} else if (type == 2) {
-            ctx.strokeStyle = '#DD0000';
-            ctx.fillStyle = '#DD0000';
-        } else if (type == 3) {
-            ctx.strokeStyle = '#0000DD';
-            ctx.fillStyle = '#0000DD';
-        } else if (type == 4) {
-            ctx.strokeStyle = '#ff9c00';
-            ctx.fillStyle = '#ff9c00';
-        } else if (type == 5) {
-            ctx.strokeStyle = '#2bedff';
-            ctx.fillStyle = '#2bedff';
-        } else {
-            ctx.strokeStyle = '#d139ff';
-            ctx.fillStyle = '#d139ff';
+        var type = rand(1, 4);
+        var url = "https://tagsplash.github.io/TagSplashClient/assets/";
+        if (type == 1) {
+            url += "bluePurple/";
+            url += "paint" + rand(1, 15) + ".png";
+        } else if (type == 2) {
+            url += "greenYellow/";
+            url += "paint" + rand(29, 42) + ".png";
+        } else if(type==3){
+            url += "redOrange/";
+            url += "paint" + rand(15, 29) + ".png";
+            //alert("wut?");
+        }else{
+            //alert('???')
         }
-        ctx.stroke();
-        ctx.fill();*/
+        //alert(url+"/"+type)
+        var image = new Image();
+        image.src = url;
+        image.width = s;
+        image.height = s;
+        ctx.drawImage(image, x, y);
     }
 </script>
 <script>
