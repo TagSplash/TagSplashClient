@@ -150,7 +150,7 @@
                 container.style.display = "block";
                 resize_canvas();
                 clearInterval(focus);
-                setInterval(drawrand, 10);
+                setInterval(drawrand, 1000);
             }
         }
     });
@@ -178,10 +178,13 @@
         ctx.beginPath();
         ctx.arc(x, y, s, 0, 2 * Math.PI);
         var type = rand(1, 6);
-        if (type == 1) {
-            ctx.strokeStyle = '#00AA00';
-            ctx.fillStyle = '#00AA00';
-        } else if (type == 2) {
+        //if (type == 1) {
+            var image = new Image();
+            image.src = "https://tagsplash.github.io/TagSplashClient/assets/bluePurple/paint1.png";
+            image.width=s;
+            image.height=s;
+            ctx.drawImage(image, x, y);
+        /*} else if (type == 2) {
             ctx.strokeStyle = '#DD0000';
             ctx.fillStyle = '#DD0000';
         } else if (type == 3) {
@@ -198,7 +201,7 @@
             ctx.fillStyle = '#d139ff';
         }
         ctx.stroke();
-        ctx.fill();
+        ctx.fill();*/
     }
 </script>
 <script>
