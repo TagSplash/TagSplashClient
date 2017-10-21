@@ -37,7 +37,6 @@
             top: 45%;
             color: grey;
         }
-
     </style>
     <style>
         .container {
@@ -134,6 +133,7 @@
     container.style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("left").style.display = "none";
+    var length=0;
     var focus = setInterval(function () {
         input.focus();
         if (input.innerHTML != "") {
@@ -151,40 +151,39 @@
                 container.style.display = "block";
                 resize_canvas();
                 clearInterval(focus);
-                fs.readFile('../TagSplashServer/tweet.txt', function read(err, data) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    var len = data.length;
-
-                    setInterval(drawrand, 10);
-                });
+                setInterval(drawify, 10);
             }
         }
     });
+    var old_length=0;
+    function drawify() {
+        fs.readFile('../TagSplashServer/tweet.txt', function read(err, data) {
+            if (err) {
+                throw err;
+            }
+            length = data.length;
+
+        });
+        if(old_length!=length){
+            old_length=length;
+            draw(length, length);
+        }
+    }
 
     function resize_canvas() {
         if (canvas.width < window.innerWidth) {
             canvas.width = window.innerWidth;
         }
-
         if (canvas.height < window.innerHeight) {
             canvas.height = window.innerHeight;
         }
     }
-
     function rand(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min)) + min;
     }
-
-    function drawrand() {
-        draw(rand(1, window.innerWidth)-70, rand(1, window.innerHeight)-70, rand(10, 100))
-    }
-
-    function draw(x, y, s) {
+    function draw(x, y) {
         ctx = canvas.getContext("2d");
         var type = rand(1, 4);
         var url = "https://tagsplash.github.io/TagSplashClient/assets/";
@@ -194,11 +193,11 @@
         } else if (type == 2) {
             url += "greenYellow/";
             url += "paint" + rand(29, 42) + ".png";
-        } else if(type==3){
+        } else if (type == 3) {
             url += "redOrange/";
             url += "paint" + rand(15, 29) + ".png";
             //alert("wut?");
-        }else{
+        } else {
             //alert('???')
         }
         //alert(url+"/"+type)
@@ -211,13 +210,10 @@
 </script>
 <script>
     //animation
-
-
     function myFunction(x) {
         x.classList.toggle("change");
         $("#top").fadeToggle("normal", "linear");
         $("#left").fadeToggle("normal", "linear");
-
     }
 </script>
 </body>
