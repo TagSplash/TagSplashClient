@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Tag Splash</title>
+    <link rel="icon" type="img/ico" href="assets/favicon.ico">
+    <style>
+        .input {
+            border-bottom-color: black;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            width: 40%;
+            height: 10%;
+            text-align: center;
+            outline: none;
+            font-size: 40px;
+            position: absolute;
+            right: 30%;
+            top: 45%;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            padding: 0px;
+            margin: 0px;
+        }
+        .placeholder {
+            width: 40%;
+            height: 10%;
+            text-align: center;
+            outline: none;
+            font-size: 40px;
+            position: absolute;
+            right: 30%;
+            top: 45%;
+            color: grey;
+        }
+    </style>
+    <style>
+        .container {
+            display: inline-block;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        #download{
+            position: absolute;
+            right: 10px;
+            bottom: 50px;
+            cursor:pointer;
+        }
+        .bar1, .bar2, .bar3 {
+            width: 35px;
+            height: 5px;
+            background-color: #111111;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+            transform: rotate(-45deg) translate(-9px, 6px);
+        }
+        .change .bar2 {
+            opacity: 0;
+        }
+        .change .bar3 {
+            -webkit-transform: rotate(45deg) translate(-8px, -8px);
+            transform: rotate(45deg) translate(-8px, -8px);
+        }
+        .change #top {
+            display: none;
+        }
+        .change #left {
+            display: none;
+        }
+        .white {
+            color: #111111;
+            font-size: 30px;
+        }
+        #top {
+            position: absolute;
+            top: 10px;
+            text-align: center;
+            left: 10px;
+            width: 20%;
+        }
+        #left {
+            position: absolute;
+            left: 0px;
+            top: 10px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+    </style>
+
+</head>
+<body>
+<div contenteditable="true" class="input" id="input"></div>
+<div class="placeholder" id="placeholder">#putyourhashtaghere</div>
+
+<div class="container" onclick="myFunction(this)" id="container">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+</div>
+<span class="white" id="top">
+    stupider→
+</span>
+<div class="white" id="left">
+    smarter↓
+</div>
+<canvas id="canvas"></canvas>
+
+<script>
+    var input = document.getElementById("input");
+    var placeholder = document.getElementById("placeholder");
+    var canvas = document.getElementById("canvas");
+    var container = document.getElementById("container");
+    canvas.style.display = "none";
+    container.style.display = "none";
+    document.getElementById("top").style.display = "none";
+    document.getElementById("left").style.display = "none";
+    var focus = setInterval(function () {
+        input.focus();
+        if (input.innerHTML != "") {
+            placeholder.style.display = "none";
+        } else {
+            placeholder.style.display = "block";
+        }
+    }, 10);
+    input.addEventListener('keydown', function (event) {
+        if (event.key === "Enter") {
+            if (input.innerHTML != "") {
+                input.style.display = "none";
+                placeholder.style.display = "none";
+                canvas.style.display = "block";
+                container.style.display = "block";
+                resize_canvas();
+                clearInterval(focus);
+                setInterval(drawrand, 10);
+            }
+        }
+    });
+    function resize_canvas() {
+        if (canvas.width < window.innerWidth) {
+            canvas.width = window.innerWidth;
+        }
+        if (canvas.height < window.innerHeight) {
+            canvas.height = window.innerHeight;
+        }
+    }
+    function rand(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+    function drawrand() {
+        draw(rand(1, window.innerWidth), rand(1, window.innerHeight))
+    }
+    function draw(x, y) {
+        ctx = canvas.getContext("2d");
+        var type = rand(1, 4);
+        var url = "https://tagsplash.github.io/TagSplashClient/assets/";
+        if (type == 1) {
+            url += "bluePurple/";
+            url += "paint" + rand(1, 15) + ".png";
+        } else if (type == 2) {
+            url += "greenYellow/";
+            url += "paint" + rand(29, 42) + ".png";
+        } else if (type == 3) {
+            url += "redOrange/";
+            url += "paint" + rand(15, 29) + ".png";
+            //alert("wut?");
+        } else {
+            //alert('???')
+        }
+        //alert(url+"/"+type)
+        var image = new Image();
+        image.src = url;
+        ctx.drawImage(image, x, y);
+    }
+</script>
+<script>
+    //animation
+    function myFunction(x) {
+        x.classList.toggle("change");
+        $("#top").fadeToggle("normal", "linear");
+        $("#left").fadeToggle("normal", "linear");
+    }
+</script>
+</body>
+</html>
