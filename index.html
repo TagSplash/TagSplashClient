@@ -3,7 +3,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
     <meta charset="UTF-8">
-    <title>TagSplash</title>
+    <title>Tag Splash</title>
     <style>
         .input {
             border-bottom-color: black;
@@ -21,6 +21,8 @@
 
         body {
             font-family: 'Open Sans', sans-serif;
+            padding: 0px;
+            margin: 0px;
         }
 
         .placeholder {
@@ -39,13 +41,16 @@
 
 </head>
 <body>
-<div contenteditable="true" class="input" autofocus=true id="input"></div>
+<div contenteditable="true" class="input" id="input"></div>
 <div class="placeholder" id="placeholder">#putyourhashtaghere</div>
+<canvas id="canvas"></canvas>
 
 <script>
     var input = document.getElementById("input");
     var placeholder = document.getElementById("placeholder");
-    setInterval(function () {
+    var canvas = document.getElementById("canvas");
+    canvas.style.display = "none";
+    var focus = setInterval(function () {
         input.focus();
         if (input.innerHTML != "") {
             placeholder.style.display = "none";
@@ -58,9 +63,59 @@
             if (input.innerHTML != "") {
                 input.style.display = "none";
                 placeholder.style.display = "none";
+                canvas.style.display = "block";
+                resize_canvas();
+                clearInterval(focus);
+                setInterval(drawrand, 10);
             }
         }
     });
+
+    function resize_canvas() {
+        if (canvas.width < window.innerWidth) {
+            canvas.width = window.innerWidth;
+        }
+
+        if (canvas.height < window.innerHeight) {
+            canvas.height = window.innerHeight;
+        }
+    }
+
+    function rand(min, max) {
+        return Math.floor((Math.random() * max) + min);
+    }
+
+    function drawrand() {
+        draw(rand(1, window.innerWidth), rand(1, window.innerHeight), rand(10, 100))
+    }
+
+    function draw(x, y, s) {
+        ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(x, y, s, 0, 2 * Math.PI);
+        var type = rand(1, 6);
+        if (type == 1) {
+            ctx.strokeStyle = '#00AA00';
+            ctx.fillStyle = '#00AA00';
+        }else if(type==2){
+            ctx.strokeStyle = '#DD0000';
+            ctx.fillStyle = '#DD0000';
+        }else if(type==3){
+            ctx.strokeStyle = '#0000DD';
+            ctx.fillStyle = '#0000DD';
+        }else if(type==4){
+            ctx.strokeStyle = '#ff9c00';
+            ctx.fillStyle = '#ff9c00';
+        }else if(type==5){
+            ctx.strokeStyle = '#2bedff';
+            ctx.fillStyle = '#2bedff';
+        }else{
+            ctx.strokeStyle = '#d139ff';
+            ctx.fillStyle = '#d139ff';
+        }
+        ctx.stroke();
+        ctx.fill();
+    }
 </script>
 </body>
 </html>
