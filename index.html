@@ -133,7 +133,7 @@
     container.style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("left").style.display = "none";
-    var length=0;
+    var length = 0;
     var focus = setInterval(function () {
         input.focus();
         if (input.innerHTML != "") {
@@ -155,17 +155,20 @@
             }
         }
     });
-    var old_length=0;
+    var old_length = 0;
     function drawify() {
-        fs.readFile('../TagSplashServer/tweet.txt', function read(err, data) {
-            if (err) {
-                throw err;
-            }
-            length = data.length;
+        /*fs.readFile('../TagSplashServer/tweet.txt', function read(err, data) {
+         if (err) {
+         throw err;
+         }
+         length = data.length;
 
-        });
-        if(old_length!=length){
-            old_length=length;
+         });*/
+        var data = "thing";
+        length = data.length;
+        if (old_length != length) {
+            old_length = length;
+            alert(length);
             draw(length, length);
         }
     }
@@ -190,21 +193,23 @@
         if (type == 1) {
             url += "bluePurple/";
             url += "paint" + rand(1, 15) + ".png";
+            alert("1")
         } else if (type == 2) {
             url += "greenYellow/";
             url += "paint" + rand(29, 42) + ".png";
+            alert("2")
         } else if (type == 3) {
             url += "redOrange/";
             url += "paint" + rand(15, 29) + ".png";
+            alert("3");
             //alert("wut?");
         } else {
-            //alert('???')
+            alert('???')
         }
         //alert(url+"/"+type)
         var image = new Image();
         image.src = url;
-        image.width = s;
-        image.height = s;
+        alert(url);
         ctx.drawImage(image, x, y);
     }
 </script>
