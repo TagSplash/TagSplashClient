@@ -129,10 +129,8 @@
     var placeholder = document.getElementById("placeholder");
     var canvas = document.getElementById("canvas");
     var container = document.getElementById("container");
-    var download = document.getElementById("download");
     canvas.style.display = "none";
     container.style.display = "none";
-    download.style.display = "none";
     document.getElementById("top").style.display = "none";
     document.getElementById("left").style.display = "none";
     var focus = setInterval(function () {
@@ -152,7 +150,6 @@
                 container.style.display = "block";
                 resize_canvas();
                 clearInterval(focus);
-                download.style.display = "block";
                 setInterval(drawrand, 10);
             }
         }
